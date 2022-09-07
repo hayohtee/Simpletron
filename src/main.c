@@ -20,6 +20,27 @@
  */
 #include <stdio.h>
 
+#define MEMORY_SIZE 100
+
+// Read and Write operations.
+#define READ 10         
+#define WRITE 11        
+
+// Load and Store operations.
+#define LOAD 20         
+#define STORE 21        
+
+// Arithmetic Operations
+#define ADD 30          
+#define SUBTRACT 31     
+#define DIVIDE 32       
+#define MULTIPLY 33     
+
+// Transfer-of-control operations
+#define BRANCH 40       
+#define BRANCHNEG 41    
+#define BRANCHZERO 42   
+#define HALT 43         // Halt - the program has completed its task.
 
 
 int main()
