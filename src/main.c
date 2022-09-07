@@ -42,6 +42,108 @@
 #define BRANCHZERO 42   
 #define HALT 43         // Halt - the program has completed its task.
 
+/**
+ * @brief Read a word from the keyboard into specific location in memory.
+ * 
+ * @param arr The memory.
+ * @param location The specified location.
+ */
+void read(int arr[], const size_t *location);
+
+/**
+ * @brief Write a word from specific location in memory to the screen.
+ * 
+ * @param arr The memory.
+ * @param location The specified location.
+ */
+void write(int arr[], const size_t *location);
+
+/**
+ * @brief Load a word from a specific location in memory into the accumulator.
+ * 
+ * @param arr The memory.
+ * @param location The specified location.
+ * @param accumulator The accumulator.
+ */
+void load(const int arr[], const size_t *location, int *accumulator);
+
+/**
+ * @brief Store a word from the accumulator into a specific location in memory.
+ * 
+ * @param arr The memory.
+ * @param location The specified location.
+ * @param accumulator The accumulator.
+ */
+void store(int arr[], const size_t *location, const int *accumulator);
+
+/**
+ * @brief Add a word from a specific location in memory to the word in accumulator.
+ * 
+ * @param arr The memory. 
+ * @param location The specified location.
+ * @param accumulator The accumulator.
+ */
+void add(const int arr[], const size_t *location, int *accumulator);
+
+/**
+ * @brief Subtract a word from a specific locatiom in memory to the word in accumulator.
+ * 
+ * @param arr The memory.
+ * @param location The specified location.
+ * @param accumulator The accumulator.
+ */
+void subtract(const int arr[], const size_t *location, int *accumulator);
+
+/**
+ * @brief Divide a word from a specific locatiom in memory to the word in accumulator.
+ * 
+ * @param arr The memory.
+ * @param location The specified location.
+ * @param accumulator The accumulator.
+ */
+void divide(const int arr[], const size_t *location, int *accumulator);
+
+/**
+ * @brief Multiply a word from a specific locatiom in memory to the word in accumulator.
+ * 
+ * @param arr The memory. 
+ * @param location The specified location.
+ * @param accumulator The accumulator.
+ */
+void multiply(const int arr[], const size_t *location, int *accumulator);
+
+/**
+ * @brief Branch to a specific location in memory.
+ * 
+ * @param location The specified location.
+ * @param programCounter The program counter.
+ */
+void branch(const size_t *location, size_t *programCounter);
+
+/**
+ * @brief Branch to a specific location in memory if the accumulator is negative.
+ * 
+ * @param location The specified location.
+ * @param accumulator The accumulator.
+ * @param programCounter The program counter.
+ */
+void branchNeg(const size_t *location, const int *accumulator, size_t *programCounter);
+
+/**
+ * @brief Branch to a specific locatiom in memory if the accumulator is zero.
+ * 
+ * @param location The specified location.
+ * @param accumulator The accumulator.
+ * @param programCounter The program counter.
+ */
+void branchZero(const size_t *location, const int *accumulator, size_t *programCounter);
+
+/**
+ * @brief Execute program instructions.
+ * 
+ * @param memory The memory.
+ */
+void executeProgram(int memory[]);
 
 int main()
 {
