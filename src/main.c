@@ -149,3 +149,130 @@ int main()
 {
     return 0;
 }
+
+
+void read(int arr[], const size_t *location)
+{
+    printf("%s", "Enter an integer: ");
+    int value = 0;
+    scanf("%d", &value);
+
+    arr[*location] = value;
+}
+
+void write(int arr[], const size_t *location)
+{
+    printf("Output: %d\n", arr[*location]);
+}
+
+void load(const int arr[], const size_t *location, int *accumulator)
+{
+    *accumulator = arr[*location];
+}
+
+void store(int arr[], const size_t *location, const int *accumulator)
+{
+    arr[*location] = *accumulator;
+}
+
+void add(const int arr[], const size_t *location, int *accumulator)
+{
+    *accumulator += arr[*location];
+}
+
+void subtract(const int arr[], const size_t *location, int *accumulator)
+{
+    *accumulator -= arr[*location];
+}
+
+void divide(const int arr[], const size_t *location, int *accumulator)
+{
+    *accumulator /= arr[*location];
+}
+
+void multiply(const int arr[], const size_t *location, int *accumulator)
+{
+    *accumulator *= arr[*location];
+}
+
+void branch(const size_t *location, size_t *programCounter)
+{
+    *programCounter = *location;
+}
+
+void branchNeg(const size_t *location, const int *accumulator, size_t *programCounter)
+{
+    if (*accumulator < 0)
+        *programCounter = *location;
+    else
+        *programCounter += 1;
+}
+
+void branchZero(const size_t *location, const int *accumulator, size_t *programCounter)
+{
+    if (*accumulator == 0)
+        *programCounter = *location;
+    else
+        *programCounter += 1;
+}
+
+void executeProgram(int memory[])
+{
+    size_t programCounter = 0;
+    int accumulator = 0;
+    int operation = 0;
+    size_t memoryAddress = 00;
+
+    do
+    {
+        operation = memory[programCounter] / 100;
+        memoryAddress = memory[programCounter] % 100;
+
+        switch (operation)
+        {
+        case READ:
+            read(memory, &memoryAddress);
+            programCounter++;
+            break;
+        case WRITE:
+            write(memory, &memoryAddress);
+            programCounter++;
+            break;
+        case LOAD:
+            load(memory, &memoryAddress, &accumulator);
+            programCounter++;
+            break;
+        case STORE:
+            store(memory, &memoryAddress, &accumulator);
+            programCounter++;
+            break;
+        case ADD:
+            add(memory, &memoryAddress, &accumulator);
+            programCounter++;
+            break;
+        case SUBTRACT:
+            subtract(memory, &memoryAddress, &accumulator);
+            programCounter++;
+            break;
+        case DIVIDE:
+            divide(memory, &memoryAddress, &accumulator);
+            programCounter++;
+            break;
+        case MULTIPLY:
+            multiply(memory, &memoryAddress, &accumulator);
+            programCounter++;
+            break;
+        case BRANCH:
+            branch(&memoryAddress, &programCounter);
+            break;
+        case BRANCHNEG:
+            branchNeg(&memoryAddress, &accumulator, &programCounter);
+            break;
+        case BRANCHZERO:
+            branchZero(&memoryAddress, &accumulator, &programCounter);
+            break;
+        }
+
+    } while (operation != HALT);
+    
+}
