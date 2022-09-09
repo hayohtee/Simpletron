@@ -45,54 +45,63 @@
 /**
  * @brief Read a word from the keyboard into specific location in memory.
  *
- * @param arr The memory.
+ * @param memory The memory.
  * @param location The specified location.
+ * @param programCounter The program counter
+
  */
-void read(int arr[], const size_t *location);
+void read(int memory[], const size_t *location, size_t *programCounter);
 
 /**
  * @brief Write a word from specific location in memory to the screen.
  *
- * @param arr The memory.
+ * @param memory The memory.
  * @param location The specified location.
+ * @param programCounter The program counter
+
  */
-void write(int arr[], const size_t *location);
+void write(int memory[], const size_t *location, size_t *programCounter);
 
 /**
  * @brief Load a word from a specific location in memory into the accumulator.
  *
- * @param arr The memory.
+ * @param memory The memory.
  * @param location The specified location.
- * @param accumulator The accumulator.
+ * @param accumulator The accumulator. 
+ * @param programCounter The program counter
+
  */
-void load(const int arr[], const size_t *location, int *accumulator);
+void load(const int memory[], const size_t *location, int *accumulator, size_t *programCounter);
 
 /**
  * @brief Store a word from the accumulator into a specific location in memory.
  *
- * @param arr The memory.
+ * @param memory The memory.
  * @param location The specified location.
  * @param accumulator The accumulator.
+ * @param programCounter The program counter.
  */
-void store(int arr[], const size_t *location, const int *accumulator);
+void store(int memory[], const size_t *location, const int *accumulator, size_t *programCounter);
 
 /**
  * @brief Add a word from a specific location in memory to the word in accumulator.
  *
- * @param arr The memory.
+ * @param memory The memory.
  * @param location The specified location.
  * @param accumulator The accumulator.
+ * @param programCounter The program counter.
  */
-void add(const int arr[], const size_t *location, int *accumulator);
+void add(const int memory[], const size_t *location, int *accumulator, size_t *programCounter);
 
 /**
  * @brief Subtract a word from a specific locatiom in memory to the word in accumulator.
  *
- * @param arr The memory.
+ * @param memory The memory.
  * @param location The specified location.
  * @param accumulator The accumulator.
+ * @param programCounter The program counter.
  */
-void subtract(const int arr[], const size_t *location, int *accumulator);
+void subtract(const int memory[], const size_t *location, int *accumulator, size_t *programCounter);
 
 /**
  * @brief Divide a word from a specific locatiom in memory to the word in accumulator.
@@ -100,6 +109,7 @@ void subtract(const int arr[], const size_t *location, int *accumulator);
  * @param arr The memory.
  * @param location The specified location.
  * @param accumulator The accumulator.
+ * @param programCounter The program counter
  */
 void divide(int arr[], const size_t *location, int *accumulator, size_t *programCounter);
 
@@ -109,8 +119,10 @@ void divide(int arr[], const size_t *location, int *accumulator, size_t *program
  * @param arr The memory.
  * @param location The specified location.
  * @param accumulator The accumulator.
+ * @param programCounter The program counter
+
  */
-void multiply(const int arr[], const size_t *location, int *accumulator);
+void multiply(const int arr[], const size_t *location, int *accumulator, size_t *programCounter);
 
 /**
  * @brief Branch to a specific location in memory.
@@ -158,9 +170,9 @@ void loadProgram(int memory[]);
  * @param memory The memory
  * @param programCounter The program counter
  */
-void halt(int memory[], int *programCounter);
+void halt(int memory[], size_t *programCounter);
 
-int main()
+int main() 
 {
     int memory[MEMORY_SIZE] = {4300};
 
@@ -170,38 +182,44 @@ int main()
     return 0;
 }
 
-void read(int arr[], const size_t *location)
+void read(int memory[], const size_t *location, size_t *programCounter)
 {
     printf("%s", "Enter an integer: ");
     int value = 0;
     scanf("%d", &value);
 
-    arr[*location] = value;
+    memory[*location] = value;
+    *programCounter += 1;
 }
 
-void write(int arr[], const size_t *location)
+void write(int memory[], const size_t *location, size_t *programCounter)
 {
-    printf("Output: %d\n", arr[*location]);
+    printf("Output: %d\n", memory[*location]);
+    *programCounter += 1;
 }
 
-void load(const int arr[], const size_t *location, int *accumulator)
+void load(const int memory[], const size_t *location, int *accumulator, size_t *programCounter)
 {
-    *accumulator = arr[*location];
+    *accumulator = memory[*location];
+    *programCounter += 1;
 }
 
-void store(int arr[], const size_t *location, const int *accumulator)
+void store(int memory[], const size_t *location, const int *accumulator, size_t *programCounter)
 {
-    arr[*location] = *accumulator;
+    memory[*location] = *accumulator;
+    *programCounter += 1;
 }
 
-void add(const int arr[], const size_t *location, int *accumulator)
+void add(const int memory[], const size_t *location, int *accumulator, size_t *programCounter)
 {
-    *accumulator += arr[*location];
+    *accumulator += memory[*location];
+    *programCounter += 1;
 }
 
-void subtract(const int arr[], const size_t *location, int *accumulator)
+void subtract(const int memory[], const size_t *location, int *accumulator, size_t *programCounter)
 {
-    *accumulator -= arr[*location];
+    *accumulator -= memory[*location];
+    *programCounter += 1;
 }
 
 void divide(int arr[], const size_t *location, int *accumulator, size_t *programCounter)
@@ -219,9 +237,10 @@ void divide(int arr[], const size_t *location, int *accumulator, size_t *program
     }
 }
 
-void multiply(const int arr[], const size_t *location, int *accumulator)
+void multiply(const int memory[], const size_t *location, int *accumulator, size_t *programCounter)
 {
-    *accumulator *= arr[*location];
+    *accumulator *= memory[*location];
+    *programCounter += 1;
 }
 
 void branch(const size_t *location, size_t *programCounter)
@@ -260,35 +279,28 @@ void executeProgram(int memory[])
         switch (operation)
         {
         case READ:
-            read(memory, &memoryAddress);
-            programCounter++;
+            read(memory, &memoryAddress, &programCounter);
             break;
         case WRITE:
-            write(memory, &memoryAddress);
-            programCounter++;
+            write(memory, &memoryAddress, &programCounter);
             break;
         case LOAD:
-            load(memory, &memoryAddress, &accumulator);
-            programCounter++;
+            load(memory, &memoryAddress, &accumulator, &programCounter);
             break;
         case STORE:
-            store(memory, &memoryAddress, &accumulator);
-            programCounter++;
+            store(memory, &memoryAddress, &accumulator, &programCounter);
             break;
         case ADD:
-            add(memory, &memoryAddress, &accumulator);
-            programCounter++;
+            add(memory, &memoryAddress, &accumulator, &programCounter);
             break;
         case SUBTRACT:
-            subtract(memory, &memoryAddress, &accumulator);
-            programCounter++;
+            subtract(memory, &memoryAddress, &accumulator, &programCounter);
             break;
         case DIVIDE:
             divide(memory, &memoryAddress, &accumulator, &programCounter);
             break;
         case MULTIPLY:
-            multiply(memory, &memoryAddress, &accumulator);
-            programCounter++;
+            multiply(memory, &memoryAddress, &accumulator, &programCounter);
             break;
         case BRANCH:
             branch(&memoryAddress, &programCounter);
@@ -340,7 +352,7 @@ void loadProgram(int memory[])
     puts("*** Program execution begins                  ***\n");
 }
 
-void halt(int memory[], int *programCounter)
+void halt(int memory[], size_t *programCounter)
 {
     memory[++(*programCounter)] = 4300;
 }
