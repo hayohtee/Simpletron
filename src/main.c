@@ -192,7 +192,7 @@ void read(int memory[], const size_t *location, size_t *programCounter)
 
 void write(int memory[], const size_t *location, size_t *programCounter)
 {
-    printf("Output: %d\n", memory[*location]);
+    printf("%d\n", memory[*location]);
     *programCounter += 1;
 }
 
