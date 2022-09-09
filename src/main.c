@@ -145,23 +145,16 @@ void branchZero(const size_t *location, const int *accumulator, size_t *programC
  */
 void executeProgram(int memory[]);
 
+/**
+ * @brief Type program instructions from keybord and load them into the memory
+ * 
+ * @param memory The memory
+ */
+void loadProgram(int memory[]);
+
 int main()
 {
     int memory[MEMORY_SIZE] = {4300};
-
-    // Program to read two numbers from keyboard and print the larger value
-    memory[0] = 1009;
-    memory[1] = 1010;
-    memory[2] = 2009;
-    memory[3] = 3110;
-    memory[4] = 4107;
-    memory[5] = 1109;
-    memory[6] = 4300;
-    memory[7] = 1110;
-    memory[8] = 4300;
-
-
-    executeProgram(memory);
 
     return 0;
 }
@@ -289,4 +282,33 @@ void executeProgram(int memory[])
         }
 
     } while (operation != HALT);
+}
+
+void loadProgram(int memory[])
+{
+    puts("***           Welcome to Simpletron           ***");
+    puts("***                                           ***");
+    puts("*** Please enter your program one instruction ***");
+    puts("*** (or data word) at a time. I will type the ***");
+    puts("*** location number and a question mark (?).  ***");
+    puts("*** You then type the word for that location. ***");
+    puts("*** Type the sentinel -99999 to stop entering ***");
+    puts("*** your program.                             ***\n");
+
+    int location = 0;
+    int instruction = 0;
+
+    printf("%02d ? ", location);
+    scanf("%d", &instruction);
+
+    while (instruction != -99999)
+    {
+        memory[location++] = instruction;
+
+        printf("%02d ? ", location);
+        scanf("%d", &instruction);
+    }
+
+    puts("*** Program loading completed                 ***");
+    puts("*** Program execution begins                  ***\n");
 }
