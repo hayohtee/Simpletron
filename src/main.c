@@ -184,11 +184,9 @@ int main()
 
 void read(int memory[], const size_t *location, size_t *programCounter)
 {
-    printf("%s", "Enter an integer: ");
-    int value = 0;
-    scanf("%d", &value);
+    printf("%s", "? ");
+    scanf("%d", &memory[*location]);
 
-    memory[*location] = value;
     *programCounter += 1;
 }
 
