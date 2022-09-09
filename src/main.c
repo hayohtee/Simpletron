@@ -209,7 +209,7 @@ void divide(int arr[], const size_t *location, int *accumulator, size_t *program
     if (arr[*location] != 0)
     {
         *accumulator /= arr[*location];
-        *programCounter++;
+        *programCounter += 1;
     }
     else
     {
@@ -298,6 +298,13 @@ void executeProgram(int memory[])
             break;
         case BRANCHZERO:
             branchZero(&memoryAddress, &accumulator, &programCounter);
+            break;
+        case HALT:
+            break;
+        default:
+            puts("*** Invalid operation detected                 ***");
+            puts("*** Simpletron execution abnormally terminated ***");
+            halt(memory, &programCounter);
             break;
         }
 
