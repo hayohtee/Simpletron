@@ -101,7 +101,7 @@ void subtract(const int arr[], const size_t *location, int *accumulator);
  * @param location The specified location.
  * @param accumulator The accumulator.
  */
-void divide(const int arr[], const size_t *location, int *accumulator);
+void divide(int arr[], const size_t *location, int *accumulator, size_t *programCounter);
 
 /**
  * @brief Multiply a word from a specific locatiom in memory to the word in accumulator.
@@ -193,9 +193,19 @@ void subtract(const int arr[], const size_t *location, int *accumulator)
     *accumulator -= arr[*location];
 }
 
-void divide(const int arr[], const size_t *location, int *accumulator)
+void divide(int arr[], const size_t *location, int *accumulator, size_t *programCounter)
 {
-    *accumulator /= arr[*location];
+    if (arr[*location] != 0)
+    {
+        *accumulator /= arr[*location];
+        *programCounter++;
+    }
+    else
+    {
+        puts("*** Attempt to divide by zero                  ***");
+        puts("*** Simpletron execution abnormally terminated ***");
+        arr[++(*programCounter)] = 4300;
+    }
 }
 
 void multiply(const int arr[], const size_t *location, int *accumulator)
@@ -263,8 +273,7 @@ void executeProgram(int memory[])
             programCounter++;
             break;
         case DIVIDE:
-            divide(memory, &memoryAddress, &accumulator);
-            programCounter++;
+            divide(memory, &memoryAddress, &accumulator, &programCounter);
             break;
         case MULTIPLY:
             multiply(memory, &memoryAddress, &accumulator);
