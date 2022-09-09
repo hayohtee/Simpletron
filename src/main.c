@@ -152,9 +152,20 @@ void executeProgram(int memory[]);
  */
 void loadProgram(int memory[]);
 
+/**
+ * @brief Bring the program to an end due to error
+ * 
+ * @param memory The memory
+ * @param programCounter The program counter
+ */
+void halt(int memory[], int *programCounter);
+
 int main()
 {
     int memory[MEMORY_SIZE] = {4300};
+
+    loadProgram(memory);
+    executeProgram(memory);
 
     return 0;
 }
@@ -204,7 +215,7 @@ void divide(int arr[], const size_t *location, int *accumulator, size_t *program
     {
         puts("*** Attempt to divide by zero                  ***");
         puts("*** Simpletron execution abnormally terminated ***");
-        arr[++(*programCounter)] = 4300;
+        halt(arr, programCounter);
     }
 }
 
@@ -320,4 +331,9 @@ void loadProgram(int memory[])
 
     puts("*** Program loading completed                 ***");
     puts("*** Program execution begins                  ***\n");
+}
+
+void halt(int memory[], int *programCounter)
+{
+    memory[++(*programCounter)] = 4300;
 }
