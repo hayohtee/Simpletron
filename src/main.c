@@ -46,109 +46,99 @@
  * @brief Read a word from the keyboard into specific location in memory.
  *
  * @param memory The memory.
- * @param location The specified location.
- * @param programCounter The program counter
+ * @param location The specified location in the memory.
 
  */
-void read(int memory[], const size_t *location, size_t *programCounter);
+void read(int memory[], const size_t *location);
 
 /**
  * @brief Write a word from specific location in memory to the screen.
  *
  * @param memory The memory.
- * @param location The specified location.
- * @param programCounter The program counter
-
+ * @param location The specified location in the memory.
  */
-void write(int memory[], const size_t *location, size_t *programCounter);
+void write(int memory[], const size_t *location);
 
 /**
  * @brief Load a word from a specific location in memory into the accumulator.
  *
  * @param memory The memory.
- * @param location The specified location.
- * @param accumulator The accumulator. 
- * @param programCounter The program counter
-
+ * @param location The specified location in the memory.
+ * @param accumulator The accumulator.
  */
-void load(const int memory[], const size_t *location, int *accumulator, size_t *programCounter);
+void load(const int memory[], const size_t *location, int *accumulator);
 
 /**
  * @brief Store a word from the accumulator into a specific location in memory.
  *
  * @param memory The memory.
- * @param location The specified location.
+ * @param location The specified location in the memory.
  * @param accumulator The accumulator.
- * @param programCounter The program counter.
  */
-void store(int memory[], const size_t *location, const int *accumulator, size_t *programCounter);
+void store(int memory[], const size_t *location, const int *accumulator);
 
 /**
  * @brief Add a word from a specific location in memory to the word in accumulator.
  *
  * @param memory The memory.
- * @param location The specified location.
+ * @param location The specified location location in the memory.
  * @param accumulator The accumulator.
- * @param programCounter The program counter.
  */
-void add(const int memory[], const size_t *location, int *accumulator, size_t *programCounter);
+void add(const int memory[], const size_t *location, int *accumulator);
 
 /**
  * @brief Subtract a word from a specific locatiom in memory to the word in accumulator.
  *
  * @param memory The memory.
- * @param location The specified location.
+ * @param location The specified location in the memory.
  * @param accumulator The accumulator.
- * @param programCounter The program counter.
  */
-void subtract(const int memory[], const size_t *location, int *accumulator, size_t *programCounter);
+void subtract(const int memory[], const size_t *location, int *accumulator);
 
 /**
  * @brief Divide a word from a specific locatiom in memory to the word in accumulator.
  *
- * @param arr The memory.
- * @param location The specified location.
+ * @param memory The memory.
+ * @param location The specified location in the memory.
  * @param accumulator The accumulator.
- * @param programCounter The program counter
+ * @param instructionCounter The instruction counter
  */
-void divide(int arr[], const size_t *location, int *accumulator, size_t *programCounter);
+void divide(int memory[], const size_t *location, int *accumulator, const size_t *instructionCounter);
 
 /**
  * @brief Multiply a word from a specific locatiom in memory to the word in accumulator.
  *
  * @param arr The memory.
- * @param location The specified location.
+ * @param location The specified location in the memory.
  * @param accumulator The accumulator.
- * @param programCounter The program counter
-
  */
-void multiply(const int arr[], const size_t *location, int *accumulator, size_t *programCounter);
+void multiply(const int arr[], const size_t *location, int *accumulator);
 
 /**
  * @brief Branch to a specific location in memory.
  *
- * @param location The specified location.
- * @param programCounter The program counter.
+ * @param location The specified location in memory.
+ * @param instructionCounter The instruction counter.
  */
-void branch(const size_t *location, size_t *programCounter);
+void branch(const size_t *location, size_t *instructionCounter);
 
 /**
  * @brief Branch to a specific location in memory if the accumulator is negative.
  *
- * @param location The specified location.
+ * @param location The specified location in the memory.
  * @param accumulator The accumulator.
- * @param programCounter The program counter.
+ * @param instructionCounter The instruction counter.
  */
-void branchNeg(const size_t *location, const int *accumulator, size_t *programCounter);
+void branchNeg(const size_t *location, const int *accumulator, size_t *instructionCounter);
 
 /**
  * @brief Branch to a specific locatiom in memory if the accumulator is zero.
  *
- * @param location The specified location.
+ * @param location The specified location in the memory.
  * @param accumulator The accumulator.
- * @param programCounter The program counter.
+ * @param instructionCounter The instruction counter.
  */
-void branchZero(const size_t *location, const int *accumulator, size_t *programCounter);
+void branchZero(const size_t *location, const int *accumulator, size_t *instructionCounter);
 
 /**
  * @brief Execute program instructions.
@@ -159,20 +149,20 @@ void executeProgram(int memory[]);
 
 /**
  * @brief Type program instructions from keybord and load them into the memory
- * 
+ *
  * @param memory The memory
  */
 void loadProgram(int memory[]);
 
 /**
- * @brief Bring the program to an end due to error
- * 
+ * @brief Bring the program to an end
+ *
  * @param memory The memory
- * @param programCounter The program counter
+ * @param instructionCounter The instruction counter
  */
-void halt(int memory[], size_t *programCounter);
+void halt(int memory[], const size_t *instructionCounter);
 
-int main() 
+int main()
 {
     int memory[MEMORY_SIZE] = {4300};
 
@@ -182,143 +172,130 @@ int main()
     return 0;
 }
 
-void read(int memory[], const size_t *location, size_t *programCounter)
+void read(int memory[], const size_t *location)
 {
     printf("%s", "? ");
     scanf("%d", &memory[*location]);
-
-    *programCounter += 1;
 }
 
-void write(int memory[], const size_t *location, size_t *programCounter)
+void write(int memory[], const size_t *location)
 {
     printf("%d\n", memory[*location]);
-    *programCounter += 1;
 }
 
-void load(const int memory[], const size_t *location, int *accumulator, size_t *programCounter)
+void load(const int memory[], const size_t *location, int *accumulator)
 {
     *accumulator = memory[*location];
-    *programCounter += 1;
 }
 
-void store(int memory[], const size_t *location, const int *accumulator, size_t *programCounter)
+void store(int memory[], const size_t *location, const int *accumulator)
 {
     memory[*location] = *accumulator;
-    *programCounter += 1;
 }
 
-void add(const int memory[], const size_t *location, int *accumulator, size_t *programCounter)
+void add(const int memory[], const size_t *location, int *accumulator)
 {
     *accumulator += memory[*location];
-    *programCounter += 1;
 }
 
-void subtract(const int memory[], const size_t *location, int *accumulator, size_t *programCounter)
+void subtract(const int memory[], const size_t *location, int *accumulator)
 {
     *accumulator -= memory[*location];
-    *programCounter += 1;
 }
 
-void divide(int arr[], const size_t *location, int *accumulator, size_t *programCounter)
+void divide(int arr[], const size_t *location, int *accumulator, const size_t *instructionCounter)
 {
     if (arr[*location] != 0)
     {
         *accumulator /= arr[*location];
-        *programCounter += 1;
     }
     else
     {
         puts("*** Attempt to divide by zero                  ***");
-        puts("*** Simpletron execution abnormally terminated ***");
-        halt(arr, programCounter);
+        halt(arr, instructionCounter);
     }
 }
 
-void multiply(const int memory[], const size_t *location, int *accumulator, size_t *programCounter)
+void multiply(const int memory[], const size_t *location, int *accumulator)
 {
     *accumulator *= memory[*location];
-    *programCounter += 1;
 }
 
-void branch(const size_t *location, size_t *programCounter)
+void branch(const size_t *location, size_t *instructionCounter)
 {
-    *programCounter = *location;
+    *instructionCounter = *location;
 }
 
-void branchNeg(const size_t *location, const int *accumulator, size_t *programCounter)
+void branchNeg(const size_t *location, const int *accumulator, size_t *instructionCounter)
 {
     if (*accumulator < 0)
-        *programCounter = *location;
-    else
-        *programCounter += 1;
+        *instructionCounter = *location;
 }
 
-void branchZero(const size_t *location, const int *accumulator, size_t *programCounter)
+void branchZero(const size_t *location, const int *accumulator, size_t *instructionCounter)
 {
     if (*accumulator == 0)
-        *programCounter = *location;
-    else
-        *programCounter += 1;
+        *instructionCounter = *location;
 }
 
 void executeProgram(int memory[])
 {
-    size_t programCounter = 0;
     int accumulator = 0;
-    int operation = 0;
-    size_t memoryAddress = 00;
+    size_t instructionCounter = 0;
+    int instructionRegister = 0;
+    int operationCode = 0;
+    size_t operand = 00;
 
     do
     {
-        operation = memory[programCounter] / 100;
-        memoryAddress = memory[programCounter] % 100;
+        instructionRegister = memory[instructionCounter++];
+        operationCode = instructionRegister / 100;
+        operand = instructionRegister % 100;
 
-        switch (operation)
+        switch (operationCode)
         {
         case READ:
-            read(memory, &memoryAddress, &programCounter);
+            read(memory, &operand);
             break;
         case WRITE:
-            write(memory, &memoryAddress, &programCounter);
+            write(memory, &operand);
             break;
         case LOAD:
-            load(memory, &memoryAddress, &accumulator, &programCounter);
+            load(memory, &operand, &accumulator);
             break;
         case STORE:
-            store(memory, &memoryAddress, &accumulator, &programCounter);
+            store(memory, &operand, &accumulator);
             break;
         case ADD:
-            add(memory, &memoryAddress, &accumulator, &programCounter);
+            add(memory, &operand, &accumulator);
             break;
         case SUBTRACT:
-            subtract(memory, &memoryAddress, &accumulator, &programCounter);
+            subtract(memory, &operand, &accumulator);
             break;
         case DIVIDE:
-            divide(memory, &memoryAddress, &accumulator, &programCounter);
+            divide(memory, &operand, &accumulator, &instructionCounter);
             break;
         case MULTIPLY:
-            multiply(memory, &memoryAddress, &accumulator, &programCounter);
+            multiply(memory, &operand, &accumulator);
             break;
         case BRANCH:
-            branch(&memoryAddress, &programCounter);
+            branch(&operand, &instructionCounter);
             break;
         case BRANCHNEG:
-            branchNeg(&memoryAddress, &accumulator, &programCounter);
+            branchNeg(&operand, &accumulator, &instructionCounter);
             break;
         case BRANCHZERO:
-            branchZero(&memoryAddress, &accumulator, &programCounter);
+            branchZero(&operand, &accumulator, &instructionCounter);
             break;
         case HALT:
             break;
         default:
             puts("*** Invalid operation detected                 ***");
-            puts("*** Simpletron execution abnormally terminated ***");
-            halt(memory, &programCounter);
+            halt(memory, &instructionCounter);
             break;
         }
 
-    } while (operation != HALT);
+    } while (operationCode != HALT);
 }
 
 void loadProgram(int memory[])
@@ -350,7 +327,8 @@ void loadProgram(int memory[])
     puts("*** Program execution begins                  ***\n");
 }
 
-void halt(int memory[], size_t *programCounter)
+void halt(int memory[], const size_t *programCounter)
 {
-    memory[++(*programCounter)] = 4300;
+    puts("*** Simpletron execution terminated ***");
+    memory[*programCounter] = 4300;
 }
