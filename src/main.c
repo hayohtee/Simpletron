@@ -20,7 +20,7 @@
  */
 #include <stdio.h>
 
-#define MEMORY_SIZE 100
+#define MEMORY_SIZE 1000
 
 // Read and Write operations.
 #define READ 10
