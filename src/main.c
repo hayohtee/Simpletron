@@ -24,26 +24,26 @@
 #define MEMORY_SIZE 1000
 
 // Read and Write operations.
-#define READ 10
-#define WRITE 11
+#define READ 0xA
+#define WRITE 0xB
 
 // Load and Store operations.
-#define LOAD 20
-#define STORE 21
+#define LOAD 0x14
+#define STORE 0x15
 
 // Arithmetic Operations
-#define ADD 30
-#define SUBTRACT 31
-#define DIVIDE 32
-#define MULTIPLY 33
-#define MODULO 34
-#define EXPONENT 35
+#define ADD 0x1E
+#define SUBTRACT 0x1F
+#define DIVIDE 0x20
+#define MULTIPLY 0x21
+#define MODULO 0x22
+#define EXPONENT 0x23
 
 // Transfer-of-control operations
-#define BRANCH 40
-#define BRANCHNEG 41
-#define BRANCHZERO 42
-#define HALT 43 // Halt - the program has completed its task.
+#define BRANCH 0x28
+#define BRANCHNEG 0x29
+#define BRANCHZERO 0x2A
+#define HALT 0x2B // Halt - the program has completed its task.
 
 /**
  * @brief Read a word from the keyboard into specific location in memory.
