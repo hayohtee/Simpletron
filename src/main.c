@@ -35,6 +35,7 @@
 #define SUBTRACT 31
 #define DIVIDE 32
 #define MULTIPLY 33
+#define REMAINDER 34
 
 // Transfer-of-control operations
 #define BRANCH 40
@@ -108,11 +109,20 @@ void divide(int memory[], const size_t *location, int *accumulator, const size_t
 /**
  * @brief Multiply a word from a specific locatiom in memory to the word in accumulator.
  *
- * @param arr The memory.
+ * @param memory The memory.
  * @param location The specified location in the memory.
  * @param accumulator The accumulator.
  */
-void multiply(const int arr[], const size_t *location, int *accumulator);
+void multiply(const int memory[], const size_t *location, int *accumulator);
+
+/**
+ * @brief Perform remainder operation with the accumulator and the word from
+ * specific location in memory and leave the result at the accumulator
+ * @param memory The memory.
+ * @param location The specified location in the memory.
+ * @param accumulator The accumulator.
+ */
+void modulo(const int memory[], const size_t *location, int *accumulator);
 
 /**
  * @brief Branch to a specific location in memory.
@@ -278,6 +288,9 @@ void executeProgram(int memory[])
         case MULTIPLY:
             multiply(memory, &operand, &accumulator);
             break;
+        case REMAINDER:
+            modulo(memory, &operand, &accumulator);
+            break;
         case BRANCH:
             branch(&operand, &instructionCounter);
             break;
@@ -331,4 +344,9 @@ void halt(int memory[], const size_t *programCounter)
 {
     puts("*** Simpletron execution terminated ***");
     memory[*programCounter] = 4300;
+}
+
+void modulo(const int memory[], const size_t *location, int *accumulator)
+{
+    *accumulator = (*accumulator) % memory[*location];
 }
