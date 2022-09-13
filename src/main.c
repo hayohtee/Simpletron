@@ -35,7 +35,7 @@
 #define SUBTRACT 31
 #define DIVIDE 32
 #define MULTIPLY 33
-#define REMAINDER 34
+#define MODULO 34
 
 // Transfer-of-control operations
 #define BRANCH 40
@@ -288,7 +288,7 @@ void executeProgram(int memory[])
         case MULTIPLY:
             multiply(memory, &operand, &accumulator);
             break;
-        case REMAINDER:
+        case MODULO:
             modulo(memory, &operand, &accumulator);
             break;
         case BRANCH:
