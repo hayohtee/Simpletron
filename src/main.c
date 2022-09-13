@@ -18,6 +18,7 @@
  * @copyright Copyright (c) 2022
  *
  */
+#include <math.h>
 #include <stdio.h>
 
 #define MEMORY_SIZE 1000
@@ -36,6 +37,7 @@
 #define DIVIDE 32
 #define MULTIPLY 33
 #define MODULO 34
+#define EXPONENT 35
 
 // Transfer-of-control operations
 #define BRANCH 40
@@ -123,6 +125,14 @@ void multiply(const int memory[], const size_t *location, int *accumulator);
  * @param accumulator The accumulator.
  */
 void modulo(const int memory[], const size_t *location, int *accumulator);
+
+/**
+ * @brief Perform exponentiation calculation on the accumulator
+ * @param memory The memory.
+ * @param location The specified location in the memory holding the raised power.
+ * @param accumulator The accumulator.
+ */
+void exponent(const int memory[], const size_t *location, int *accumulator);
 
 /**
  * @brief Branch to a specific location in memory.
@@ -291,6 +301,9 @@ void executeProgram(int memory[])
         case MODULO:
             modulo(memory, &operand, &accumulator);
             break;
+        case EXPONENT:
+            exponent(memory, &operand, &accumulator);
+            break;
         case BRANCH:
             branch(&operand, &instructionCounter);
             break;
@@ -349,4 +362,9 @@ void halt(int memory[], const size_t *programCounter)
 void modulo(const int memory[], const size_t *location, int *accumulator)
 {
     *accumulator = (*accumulator) % memory[*location];
+}
+
+void exponent(const int memory[], const size_t *location, int *accumulator)
+{
+    *accumulator = (int) pow(*accumulator, memory[*location]);
 }
